@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هشدار امنیتی!</title>
+    <style>
+        body { 
+            background-color: black; 
+            font-family: Tahoma, Arial, sans-serif; 
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #scary-part { color: red; font-size: 2.5em; font-weight: bold; }
+        #safe-part { display: none; color: #00ff00; font-size: 1.3em; line-height: 1.8; }
+        .highlight { color: white; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="scary-part">
+        ⚠️ شما هک شدید! ⚠️
+        <p style="font-size: 0.4em; color: gray; margin-top: 20px;">در حال استخراج اطلاعات دستگاه...</p>
+    </div>
+
+    <div id="safe-part">
+        ✅ نترسید! این فقط یک مانور بود. <br><br>
+        اما به همین سادگی ممکن بود با اسکن کردن یک کد ناشناس، اطلاعات گوشی شما به سرقت برود.<br><br>
+        <span class="highlight">برای یادگیری نحوه محافظت از خود در دنیای دیجیتال، به غرفه امنیت ما سر بزنید!</span>
+    </div>
+
+    <script>
+        // تغییر محتوا بعد از ۴۰۰۰ میلی‌ثانیه (۴ ثانیه)
+        setTimeout(() => {
+            document.getElementById('scary-part').style.display = 'none';
+            document.getElementById('safe-part').style.display = 'block';
+        }, 4000);
+    </script>
+</body>
+</html>
