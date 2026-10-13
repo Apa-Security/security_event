@@ -1,45 +1,62 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>هشدار امنیتی!</title>
-    <style>
-        body { 
-            background-color: black; 
-            font-family: Tahoma, Arial, sans-serif; 
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            height: 100vh; 
-            margin: 0; 
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        #scary-part { color: red; font-size: 2.5em; font-weight: bold; }
-        #safe-part { display: none; color: #00ff00; font-size: 1.3em; line-height: 1.8; }
-        .highlight { color: white; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div id="scary-part">
-        ⚠️ شما هک شدید! ⚠️
-        <p style="font-size: 0.4em; color: gray; margin-top: 20px;">در حال استخراج اطلاعات دستگاه...</p>
+<!-- بخش فریبنده (تله قرعه‌کشی) -->
+    <div id="lottery-part" style="color: white; margin-top: 20px;">
+        <h2>🎉 قرعه‌کشی غرفه امنیت 🎉</h2>
+        <p>برای شرکت در قرعه‌کشی، نام خود را وارد کنید:</p>
+        <input type="text" id="userName" placeholder="نام شما..." style="padding: 10px; font-size: 1em; text-align: center; border-radius: 5px; border: none; outline: none; margin-bottom: 20px;">
+        <br>
+        <button id="submitBtn" style="padding: 10px 20px; font-size: 1.2em; background-color: #00ff00; color: black; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">ثبت‌نام و دریافت جایزه</button>
     </div>
 
-    <div id="safe-part">
-        ✅ نترسید! این فقط یک مانور بود. <br><br>
-        اما به همین سادگی ممکن بود با اسکن کردن یک کد ناشناس، اطلاعات گوشی شما به سرقت برود.<br><br>
-        <span class="highlight">برای یادگیری نحوه محافظت از خود در دنیای دیجیتال، به غرفه امنیت ما سر بزنید!</span>
+    <!-- بخش ترسناک (پیام هک) -->
+    <div id="scary-part" style="display: none; color: red; font-size: 2.5em; font-weight: bold;">
+        ⚠️ <span id="hackedName"></span>، شما هک شدید! ⚠️
+        <p style="font-size: 0.4em; color: gray; margin-top: 20px;">
+            ...در حال استخراج اطلاعات دستگاه...<br><br>
+            <span id="deviceInfo" style="color: white;"></span>
+        </p>
     </div>
 
+    <!-- بخش ایمن (پیام آموزشی) -->
+    <div id="safe-part" style="display: none; color: #00ff00; font-size: 1.3em; line-height: 1.8; margin-top: 50px;">
+        <span class="highlight">نترسید!</span> این فقط یک مانور آموزشی بود.<br>
+        همیشه مراقب لینک‌های ناشناس و فرم‌های قرعه‌کشی باشید.
+    </div>
+
+    <!-- کدهای منطقی برای لرزش و خواندن اطلاعات -->
     <script>
-        // تغییر محتوا بعد از ۴۰۰۰ میلی‌ثانیه (۴ ثانیه)
-        setTimeout(() => {
-            document.getElementById('scary-part').style.display = 'none';
-            document.getElementById('safe-part').style.display = 'block';
-        }, 4000);
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // ۱. خواندن نام کاربر
+            let name = document.getElementById('userName').value;
+            if (name.trim() === "") {
+                name = "کاربر ناشناس";
+            }
+
+            // ۲. استخراج اطلاعات دستگاه
+            let rawDeviceInfo = navigator.userAgent;
+            let readableDevice = "دستگاه ناشناس";
+            
+            if (/android/i.test(rawDeviceInfo)) {
+                readableDevice = "یک گوشی اندرویدی";
+            } else if (/iphone|ipad|ipod/i.test(rawDeviceInfo)) {
+                readableDevice = "یک دستگاه آیفون/آیپد";
+            } else if (/windows/i.test(rawDeviceInfo)) {
+                readableDevice = "یک سیستم ویندوزی";
+            }
+
+            // ۳. ایجاد ۵ ثانیه لرزش
+            if ("vibrate" in navigator) {
+                navigator.vibrate(5000); 
+            }
+
+            // ۴. مخفی کردن فرم و نمایش پیام هک
+            document.getElementById('lottery-part').style.display = 'none';
+            document.getElementById('hackedName').innerText = name;
+            document.getElementById('deviceInfo').innerText = "شما با " + readableDevice + " وارد شده‌اید.\nمشخصات فنی: " + rawDeviceInfo;
+            document.getElementById('scary-part').style.display = 'block';
+
+            // ۵. نمایش پیام ایمن بعد از ۵.۵ ثانیه
+            setTimeout(function() {
+                document.getElementById('safe-part').style.display = 'block';
+            }, 5500);
+        });
     </script>
-</body>
-</html>
