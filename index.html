@@ -27,32 +27,33 @@
     <div id="lottery-part" style="color: white;">
         <h2 style="font-size: 2em; margin-bottom: 20px;">🎉 قرعه‌کشی غرفه امنیت 🎉</h2>
         <p style="font-size: 1.2em; margin-bottom: 20px;">لطفا نام خود را جهت ثبت نام در قرعه کشی وارد کنید</p>
+        <p style="font-size: 0.9em; color: #ffcc00; margin-bottom: 20px;">🔊 توجه: برای شنیدن نتیجه قرعه‌کشی، صدای گوشی را زیاد کنید!</p>
         <input type="text" id="userName" placeholder="نام شما..." style="padding: 12px; font-size: 1.1em; text-align: center; border-radius: 8px; border: none; outline: none; margin-bottom: 25px; width: 80%; max-width: 300px;">
         <br>
         <button id="submitBtn" style="padding: 12px 25px; font-size: 1.2em; background-color: #00ff00; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 80%; max-width: 300px;">ثبت‌نام و دریافت جایزه</button>
     </div>
 
-    <!-- بخش ترسناک (پیام هک) -->
-    <div id="scary-part" style="display: none; color: red; font-size: 2.5em; font-weight: bold; text-shadow: 2px 2px 5px black;">
-        ⚠️ <span id="hackedName"></span>، هاک شدی دوست عزیز! ⚠️
+    <!-- بخش ترسناک (پیام هک + ترمینال) -->
+    <div id="scary-part" style="display: none; color: red; font-weight: bold; width: 90%; max-width: 400px;">
+        <div style="font-size: 2.2em; text-shadow: 2px 2px 5px black; margin-bottom: 20px;">
+            ⚠️ هاک شدی دوست عزیز! ⚠️
+        </div>
+        
+        <!-- باکس ترمینال هکری -->
+        <div id="terminal-box" style="background-color: black; color: #00ff00; border: 1px solid #00ff00; border-radius: 5px; padding: 15px; font-family: monospace; font-size: 1em; text-align: left; direction: ltr; min-height: 180px; text-shadow: none;">
+            <!-- کدها اینجا چاپ می‌شوند -->
+        </div>
     </div>
 
     <!-- بخش ایمن (پیام آموزشی) -->
     <div id="safe-part" style="display: none; color: #00ff00; font-size: 1.8em; font-weight: bold; line-height: 1.8; padding: 20px;">
-        شوخی کردم هاک نشدی،<br>بیا غرفه امنیت تا هاکت نکردم! 
+        شوخی کردم هاک نشدی،<br>بیا غرفه امنیت تا هاکت نکردم! 😄
     </div>
 
     <script>
         document.getElementById('submitBtn').addEventListener('click', function() {
-            // خواندن نام
-            let name = document.getElementById('userName').value;
-            if (name.trim() === "") {
-                name = "کاربر ناشناس";
-            }
-
             // مخفی کردن فرم و نمایش پیام هک
             document.getElementById('lottery-part').style.display = 'none';
-            document.getElementById('hackedName').innerText = name;
             document.getElementById('scary-part').style.display = 'block';
 
             // ویبره به مدت ۸ ثانیه
@@ -72,32 +73,63 @@
             let oscillator = audioCtx.createOscillator();
             let gainNode = audioCtx.createGain();
             
-            oscillator.type = 'sawtooth'; // نوع موج صدای تیز (مناسب آژیر)
+            oscillator.type = 'sawtooth';
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
             oscillator.start();
 
-            // زیر و بم کردن صدا برای شبیه‌سازی آژیر خطر
+            // زیر و بم کردن صدا
             let isHighPitch = false;
             let sirenInterval = setInterval(function() {
                 oscillator.frequency.value = isHighPitch ? 600 : 900;
                 isHighPitch = !isHighPitch;
             }, 300);
+            // ----------------------------------------------------
+            // بخش اجرای کدهای فیک ترمینال
+            // ----------------------------------------------------
+            let fakeCommands = [
+                "Initializing root exploit...",
+                "[+] Bypassing firewall... OK",
+                "[+] Accessing internal storage...",
+                "Downloading Gallery... 34%",
+                "Downloading Gallery... 100%",
+                "[+] Extracting WhatsApp chats...",
+                "[+] Connecting to remote server...",
+                "Uploading data... 12%",
+                "Uploading data... 89%",
+                "Uploading data... DONE",
+                "[!] DEVICE FULLY COMPROMISED [!]"
+            ];
+            
+            let terminalBox = document.getElementById('terminal-box');
+            terminalBox.innerHTML = "";
+            let cmdIndex = 0;
+            
+            // چاپ خط به خط کدها هر ۶۰۰ میلی‌ثانیه
+            let terminalInterval = setInterval(function() {
+                if (cmdIndex < fakeCommands.length) {
+                    terminalBox.innerHTML += fakeCommands[cmdIndex] + "<br>";
+                    cmdIndex++;
+                }
+            }, 600);
+            // ----------------------------------------------------
 
             // توقف کامل عملیات بعد از ۸ ثانیه
             setTimeout(function() {
-                clearInterval(flashInterval); // توقف فلشر
-                clearInterval(sirenInterval); // توقف نوسان آژیر
+                clearInterval(flashInterval); 
+                clearInterval(sirenInterval); 
+                clearInterval(terminalInterval);
+                
                 try {
-                    oscillator.stop(); // توقف صدا
+                    oscillator.stop(); 
                 } catch(e) {}
                 
-                document.body.style.backgroundColor = '#111'; // عادی شدن پس‌زمینه
+                document.body.style.backgroundColor = '#111'; 
                 
                 // نمایش پیام پایانی
                 document.getElementById('scary-part').style.display = 'none';
                 document.getElementById('safe-part').style.display = 'block';
-            }, 8000); // ۸ ثانیه
+            }, 8000);
         });
     </script>
 
