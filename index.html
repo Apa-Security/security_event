@@ -1,62 +1,83 @@
-<!-- بخش فریبنده (تله قرعه‌کشی) -->
-    <div id="lottery-part" style="color: white; margin-top: 20px;">
-        <h2>🎉 قرعه‌کشی غرفه امنیت 🎉</h2>
-        <p>برای شرکت در قرعه‌کشی، نام خود را وارد کنید:</p>
-        <input type="text" id="userName" placeholder="نام شما..." style="padding: 10px; font-size: 1em; text-align: center; border-radius: 5px; border: none; outline: none; margin-bottom: 20px;">
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قرعه‌کشی غرفه امنیت</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* تمام ارتفاع صفحه را می‌گیرد */
+            background-color: #111;
+            font-family: Tahoma, Arial, sans-serif;
+            text-align: center;
+            direction: rtl; /* راست‌چین کردن متن‌ها */
+            overflow: hidden; /* جلوگیری از اسکرول شدن هنگام چشمک زدن */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- بخش فریبنده (تله قرعه‌کشی) -->
+    <div id="lottery-part" style="color: white;">
+        <h2 style="font-size: 2em; margin-bottom: 20px;">🎉 قرعه‌کشی غرفه امنیت 🎉</h2>
+        <p style="font-size: 1.2em; margin-bottom: 20px;">لطفا نام خود را جهت ثبت نام در قرعه کشی وارد کنید</p>
+        <input type="text" id="userName" placeholder="نام شما..." style="padding: 12px; font-size: 1.1em; text-align: center; border-radius: 8px; border: none; outline: none; margin-bottom: 25px; width: 80%; max-width: 300px;">
         <br>
-        <button id="submitBtn" style="padding: 10px 20px; font-size: 1.2em; background-color: #00ff00; color: black; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">ثبت‌نام و دریافت جایزه</button>
+        <button id="submitBtn" style="padding: 12px 25px; font-size: 1.2em; background-color: #00ff00; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 80%; max-width: 300px;">ثبت‌نام و دریافت جایزه</button>
     </div>
 
     <!-- بخش ترسناک (پیام هک) -->
-    <div id="scary-part" style="display: none; color: red; font-size: 2.5em; font-weight: bold;">
-        ⚠️ <span id="hackedName"></span>، شما هک شدید! ⚠️
-        <p style="font-size: 0.4em; color: gray; margin-top: 20px;">
-            ...در حال استخراج اطلاعات دستگاه...<br><br>
-            <span id="deviceInfo" style="color: white;"></span>
-        </p>
+    <div id="scary-part" style="display: none; color: red; font-size: 2.5em; font-weight: bold; text-shadow: 2px 2px 5px black;">
+        ⚠️ <span id="hackedName"></span>، هاک شدی دوست عزیز! ⚠️
     </div>
 
     <!-- بخش ایمن (پیام آموزشی) -->
-    <div id="safe-part" style="display: none; color: #00ff00; font-size: 1.3em; line-height: 1.8; margin-top: 50px;">
-        <span class="highlight">نترسید!</span> این فقط یک مانور آموزشی بود.<br>
-        همیشه مراقب لینک‌های ناشناس و فرم‌های قرعه‌کشی باشید.
+    <div id="safe-part" style="display: none; color: #00ff00; font-size: 1.8em; font-weight: bold; line-height: 1.8; padding: 20px;">
+        شوخی کردم هاک نشدی،<br>بیا غرفه امنیت تا هاکت نکردم! 😄
     </div>
 
-    <!-- کدهای منطقی برای لرزش و خواندن اطلاعات -->
     <script>
         document.getElementById('submitBtn').addEventListener('click', function() {
-            // ۱. خواندن نام کاربر
+            // خواندن نام کاربر
             let name = document.getElementById('userName').value;
             if (name.trim() === "") {
                 name = "کاربر ناشناس";
             }
 
-            // ۲. استخراج اطلاعات دستگاه
-            let rawDeviceInfo = navigator.userAgent;
-            let readableDevice = "دستگاه ناشناس";
-            
-            if (/android/i.test(rawDeviceInfo)) {
-                readableDevice = "یک گوشی اندرویدی";
-            } else if (/iphone|ipad|ipod/i.test(rawDeviceInfo)) {
-                readableDevice = "یک دستگاه آیفون/آیپد";
-            } else if (/windows/i.test(rawDeviceInfo)) {
-                readableDevice = "یک سیستم ویندوزی";
-            }
-
-            // ۳. ایجاد ۵ ثانیه لرزش
-            if ("vibrate" in navigator) {
-                navigator.vibrate(5000); 
-            }
-
-            // ۴. مخفی کردن فرم و نمایش پیام هک
+            // مخفی کردن فرم و نمایش پیام هک
             document.getElementById('lottery-part').style.display = 'none';
             document.getElementById('hackedName').innerText = name;
-            document.getElementById('deviceInfo').innerText = "شما با " + readableDevice + " وارد شده‌اید.\nمشخصات فنی: " + rawDeviceInfo;
             document.getElementById('scary-part').style.display = 'block';
 
-            // ۵. نمایش پیام ایمن بعد از ۵.۵ ثانیه
+            // ایجاد ۱۰ ثانیه لرزش (ویبره)
+            if ("vibrate" in navigator) {
+                navigator.vibrate(10000); 
+            }
+
+            // افکت فلشر صفحه نمایش (چشمک زدن سریع پس‌زمینه)
+            let isRed = false;
+            let flashInterval = setInterval(function() {
+                document.body.style.backgroundColor = isRed ? '#111' : 'red';
+                isRed = !isRed;
+            }, 100); // سرعت چشمک زدن (هر ۱۰۰ میلی‌ثانیه)
+
+            // پایان مانور بعد از ۱۰ ثانیه
             setTimeout(function() {
+                clearInterval(flashInterval); // قطع کردن افکت فلشر
+                document.body.style.backgroundColor = '#111'; // برگرداندن رنگ پس‌زمینه به حالت عادی
+                
+                // مخفی کردن پیام ترسناک و نمایش پیام پایانی
+                document.getElementById('scary-part').style.display = 'none';
                 document.getElementById('safe-part').style.display = 'block';
-            }, 5500);
+            }, 10000); // 10000 میلی‌ثانیه = 10 ثانیه
         });
     </script>
+
+</body>
+</html>
