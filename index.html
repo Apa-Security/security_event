@@ -3,81 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تایید هویت</title>
+    <title>قرعه‌کشی غرفه امنیت</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #000;
-            color: #00ff00;
-            font-family: Tahoma, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            direction: rtl;
+            min-height: 100vh;
+            background-color: #111;
+            font-family: Tahoma, Arial, sans-serif;
             text-align: center;
-        }
-        
-        .loader {
-            border: 4px solid #111;
-            border-top: 4px solid #00ff00;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .btn-fake {
-            background-color: #00ff00;
-            color: black;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 8px;
-            margin-top: 30px;
-            display: inline-block;
-            box-shadow: 0 0 15px #00ff00;
+            direction: rtl;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
 
-    <div id="content-box">
-        <div class="loader" style="margin: 0 auto 20px auto;"></div>
-        <h2>اتصال برقرار شد</h2>
-        <p style="color: gray; font-size: 0.9em; margin-top: 10px;">برای تایید هویت و ورود به سامانه روی دکمه زیر کلیک کنید</p>
+    <!-- بخش فریبنده (تله قرعه‌کشی) -->
+    <div id="lottery-part" style="color: white;">
+        <h2 style="font-size: 2em; margin-bottom: 20px;">🎉 قرعه‌کشی غرفه امنیت 🎉</h2>
+        <p style="font-size: 1.2em; margin-bottom: 20px;">لطفا نام خود را جهت ثبت نام در قرعه کشی وارد کنید</p>
+        <p style="font-size: 0.9em; color: #ffcc00; margin-bottom: 20px;">🔊 توجه: برای شنیدن نتیجه قرعه‌کشی، صدای گوشی را زیاد کنید!</p>
+        <input type="text" id="userName" placeholder="نام شما..." style="padding: 12px; font-size: 1.1em; text-align: center; border-radius: 8px; border: none; outline: none; margin-bottom: 25px; width: 80%; max-width: 300px;">
+        <br>
+        <button id="submitBtn" style="padding: 12px 25px; font-size: 1.2em; background-color: #00ff00; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 80%; max-width: 300px;">ثبت‌نام و دریافت جایزه</button>
+    </div>
+
+    <!-- بخش ترسناک (پیام هک + ترمینال) -->
+    <div id="scary-part" style="display: none; color: red; font-weight: bold; width: 90%; max-width: 400px;">
+        <div style="font-size: 2.2em; text-shadow: 2px 2px 5px black; margin-bottom: 20px;">
+            ⚠️ هاک شدی دوست عزیز! ⚠️
+        </div>
         
-        <!-- دکمه واقعی دانلود که با Data URI کار می‌کند -->
-        <a id="download-btn" class="btn-fake" href="#" download="HACKED_DATA.txt">تایید هویت و ورود</a>
+        <!-- باکس ترمینال هکری -->
+        <div id="terminal-box" style="background-color: black; color: #00ff00; border: 1px solid #00ff00; border-radius: 5px; padding: 15px; font-family: monospace; font-size: 1em; text-align: left; direction: ltr; min-height: 180px; text-shadow: none;">
+            <!-- کدها اینجا چاپ می‌شوند -->
+        </div>
+    </div>
+
+    <!-- بخش ایمن (پیام آموزشی) -->
+    <div id="safe-part" style="display: none; color: #00ff00; font-size: 1.8em; font-weight: bold; line-height: 1.8; padding: 20px;">
+        شوخی کردم هاک نشدی،<br>بیا غرفه امنیت تا هاکت نکردم! 😄
     </div>
 
     <script>
-        // متنی که داخل فایل قرار می‌گیرد
-        const text = "⚠️ توجه ⚠️\n\nاین یک فایل تست از طرف غرفه امنیت است.\nشما این فایل را باز کردید، اما اگر این یک بدافزار واقعی بود، اکنون سیستم شما آلوده شده بود!\n\nهیچ‌گاه به سایت‌های ناشناس مراجعه نکنید و روی لینک‌های مشکوک کلیک نکنید.\n\nموفق باشید - تیم امنیت";
-        
-        // تبدیل متن به فرمت قابل دانلود مستقیم (Data URI)
-        const dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(text);
-        
-        const btn = document.getElementById('download-btn');
-        btn.setAttribute("href", dataStr);
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // مخفی کردن فرم و نمایش پیام هک
+            document.getElementById('lottery-part').style.display = 'none';
+            document.getElementById('scary-part').style.display = 'block';
 
-        // تغییر ظاهر صفحه بعد از کلیک
-        btn.addEventListener('click', function() {
+            // ویبره به مدت ۸ ثانیه
+            if ("vibrate" in navigator) {
+                navigator.vibrate(8000); 
+            }
+
+            // افکت فلشر صفحه
+            let isRed = false;
+            let flashInterval = setInterval(function() {
+                document.body.style.backgroundColor = isRed ? '#111' : 'red';
+                isRed = !isRed;
+            }, 100);
+
+            // تولید صدای آژیر با Web Audio API
+            let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let oscillator = audioCtx.createOscillator();
+            let gainNode = audioCtx.createGain();
+            
+            oscillator.type = 'sawtooth';
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+
+            // زیر و بم کردن صدا
+            let isHighPitch = false;
+            let sirenInterval = setInterval(function() {
+                oscillator.frequency.value = isHighPitch ? 600 : 900;
+                isHighPitch = !isHighPitch;
+            }, 300);
+            // ----------------------------------------------------
+            // بخش اجرای کدهای فیک ترمینال
+            // ----------------------------------------------------
+            let fakeCommands = [
+                "Initializing root exploit...",
+                "[+] Bypassing firewall... OK",
+                "[+] Accessing internal storage...",
+                "Downloading Gallery... 34%",
+                "Downloading Gallery... 100%",
+                "[+] Extracting WhatsApp chats...",
+                "[+] Connecting to remote server...",
+                "Uploading data... 12%",
+                "Uploading data... 89%",
+                "Uploading data... DONE",
+                "[!] DEVICE FULLY COMPROMISED [!]"
+            ];
+            
+            let terminalBox = document.getElementById('terminal-box');
+            terminalBox.innerHTML = "";
+            let cmdIndex = 0;
+            
+            // چاپ خط به خط کدها هر ۶۰۰ میلی‌ثانیه
+            let terminalInterval = setInterval(function() {
+                if (cmdIndex < fakeCommands.length) {
+                    terminalBox.innerHTML += fakeCommands[cmdIndex] + "<br>";
+                    cmdIndex++;
+                }
+            }, 600);
+            // ----------------------------------------------------
+
+            // توقف کامل عملیات بعد از ۸ ثانیه
             setTimeout(function() {
-                document.getElementById('content-box').innerHTML = 
-                    <h2 style="color: red; font-size: 2em; text-shadow: 0 0 10px red;">⚠️ دانلود فایل مخرب آغاز شد ⚠️</h2>
-                    <p style="color: white;">اطلاعات دستگاه شما در حال استخراج است...</p>
-                ;
-            }, 500);
+                clearInterval(flashInterval); 
+                clearInterval(sirenInterval); 
+                clearInterval(terminalInterval);
+                
+                try {
+                    oscillator.stop(); 
+                } catch(e) {}
+                
+                document.body.style.backgroundColor = '#111'; 
+                
+                // نمایش پیام پایانی
+                document.getElementById('scary-part').style.display = 'none';
+                document.getElementById('safe-part').style.display = 'block';
+            }, 8000);
         });
     </script>
 
