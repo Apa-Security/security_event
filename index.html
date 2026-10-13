@@ -12,12 +12,12 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* تمام ارتفاع صفحه را می‌گیرد */
+            min-height: 100vh;
             background-color: #111;
             font-family: Tahoma, Arial, sans-serif;
             text-align: center;
-            direction: rtl; /* راست‌چین کردن متن‌ها */
-            overflow: hidden; /* جلوگیری از اسکرول شدن هنگام چشمک زدن */
+            direction: rtl;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -44,7 +44,7 @@
 
     <script>
         document.getElementById('submitBtn').addEventListener('click', function() {
-            // خواندن نام کاربر
+            // خواندن نام
             let name = document.getElementById('userName').value;
             if (name.trim() === "") {
                 name = "کاربر ناشناس";
@@ -55,27 +55,49 @@
             document.getElementById('hackedName').innerText = name;
             document.getElementById('scary-part').style.display = 'block';
 
-            // ایجاد ۱۰ ثانیه لرزش (ویبره)
+            // ویبره به مدت ۸ ثانیه
             if ("vibrate" in navigator) {
-                navigator.vibrate(10000); 
+                navigator.vibrate(8000); 
             }
 
-            // افکت فلشر صفحه نمایش (چشمک زدن سریع پس‌زمینه)
+            // افکت فلشر صفحه
             let isRed = false;
             let flashInterval = setInterval(function() {
                 document.body.style.backgroundColor = isRed ? '#111' : 'red';
                 isRed = !isRed;
-            }, 100); // سرعت چشمک زدن (هر ۱۰۰ میلی‌ثانیه)
+            }, 100);
 
-            // پایان مانور بعد از ۱۰ ثانیه
+            // تولید صدای آژیر با Web Audio API
+            let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let oscillator = audioCtx.createOscillator();
+            let gainNode = audioCtx.createGain();
+            
+            oscillator.type = 'sawtooth'; // نوع موج صدای تیز (مناسب آژیر)
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+
+            // زیر و بم کردن صدا برای شبیه‌سازی آژیر خطر
+            let isHighPitch = false;
+            let sirenInterval = setInterval(function() {
+                oscillator.frequency.value = isHighPitch ? 600 : 900;
+                isHighPitch = !isHighPitch;
+            }, 300);
+
+            // توقف کامل عملیات بعد از ۸ ثانیه
             setTimeout(function() {
-                clearInterval(flashInterval); // قطع کردن افکت فلشر
-                document.body.style.backgroundColor = '#111'; // برگرداندن رنگ پس‌زمینه به حالت عادی
+                clearInterval(flashInterval); // توقف فلشر
+                clearInterval(sirenInterval); // توقف نوسان آژیر
+                try {
+                    oscillator.stop(); // توقف صدا
+                } catch(e) {}
                 
-                // مخفی کردن پیام ترسناک و نمایش پیام پایانی
+                document.body.style.backgroundColor = '#111'; // عادی شدن پس‌زمینه
+                
+                // نمایش پیام پایانی
                 document.getElementById('scary-part').style.display = 'none';
                 document.getElementById('safe-part').style.display = 'block';
-            }, 10000); // 10000 میلی‌ثانیه = 10 ثانیه
+            }, 8000); // ۸ ثانیه
         });
     </script>
 
