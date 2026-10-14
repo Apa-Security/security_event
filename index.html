@@ -24,13 +24,13 @@
 <body>
 
     <!-- بخش فریبنده (تله قرعه‌کشی) -->
-    <div id="lottery-part" style="color: white;">
-        <h2 style="font-size: 2em; margin-bottom: 20px;">🎉 قرعه‌کشی رویداد کامپیوتر 🎉</h2>
-        <p style="font-size: 1.2em; margin-bottom: 20px;">لطفا نام خود را جهت ثبت نام در قرعه کشی وارد کنید</p>
-        <p style="font-size: 0.9em; color: #ffcc00; margin-bottom: 20px;">🔊 توجه: برای شنیدن نتیجه قرعه‌کشی، صدای گوشی را زیاد کنید!</p>
-        <input type="text" id="userName" placeholder="نام شما..." style="padding: 12px; font-size: 1.1em; text-align: center; border-radius: 8px; border: none; outline: none; margin-bottom: 25px; width: 80%; max-width: 300px;">
+    <div id="lottery-part" style="color: white; width: 100%; max-width: 400px; padding: 0 15px; box-sizing: border-box;">
+        <h2 style="font-size: 1.6em; margin-bottom: 20px; white-space: nowrap;">🎉 قرعه‌کشی رویداد کامپیوتر 🎉</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">لطفا نام خود را جهت ثبت نام در قرعه کشی وارد کنید</p>
+        <p style="font-size: 0.85em; color: #ffcc00; margin-bottom: 20px;">🔊 توجه: برای شنیدن نتیجه قرعه‌کشی، صدای گوشی را زیاد کنید!</p>
+        <input type="text" id="userName" placeholder="نام شما..." style="padding: 12px; font-size: 1.1em; text-align: center; border-radius: 8px; border: none; outline: none; margin-bottom: 25px; width: 100%; box-sizing: border-box;">
         <br>
-        <button id="submitBtn" style="padding: 12px 25px; font-size: 1.2em; background-color: white; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 80%; max-width: 300px;">ثبت‌نام</button>
+        <button id="submitBtn" style="padding: 12px 25px; font-size: 1.2em; background-color: #00cc00; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; box-sizing: border-box;">ثبت‌نام</button>
     </div>
 
     <!-- بخش ترسناک (پیام هک + ترمینال) -->
@@ -46,8 +46,8 @@
     </div>
 
     <!-- بخش ایمن (پیام آموزشی) -->
-    <div id="safe-part" style="display: none; color: white; font-size: 1.8em; font-weight: bold; line-height: 1.8; padding: 20px;">
-        شوخی کردم هاک نشدی،<br>بیا رویداد کامپیوتر تا هاکت نکردم! 😄
+    <div id="safe-part" style="display: none; color: white; font-size: 1.6em; font-weight: bold; line-height: 1.8; padding: 20px;">
+        شوخی کردم هاک نشدی<br>بیا غرفه امنیت تا هاکت نکردم
     </div>
 
     <script>
