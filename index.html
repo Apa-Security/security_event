@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قرعه‌کشی غرفه امنیت</title>
+    <title>قرعه‌کشی رویداد کامپیوتر</title>
     <style>
         body {
             margin: 0;
@@ -25,29 +25,29 @@
 
     <!-- بخش فریبنده (تله قرعه‌کشی) -->
     <div id="lottery-part" style="color: white;">
-        <h2 style="font-size: 2em; margin-bottom: 20px;">🎉 قرعه‌کشی غرفه امنیت 🎉</h2>
+        <h2 style="font-size: 2em; margin-bottom: 20px;">🎉 قرعه‌کشی رویداد کامپیوتر 🎉</h2>
         <p style="font-size: 1.2em; margin-bottom: 20px;">لطفا نام خود را جهت ثبت نام در قرعه کشی وارد کنید</p>
         <p style="font-size: 0.9em; color: #ffcc00; margin-bottom: 20px;">🔊 توجه: برای شنیدن نتیجه قرعه‌کشی، صدای گوشی را زیاد کنید!</p>
         <input type="text" id="userName" placeholder="نام شما..." style="padding: 12px; font-size: 1.1em; text-align: center; border-radius: 8px; border: none; outline: none; margin-bottom: 25px; width: 80%; max-width: 300px;">
         <br>
-        <button id="submitBtn" style="padding: 12px 25px; font-size: 1.2em; background-color: #00ff00; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 80%; max-width: 300px;">ثبت‌نام و دریافت جایزه</button>
+        <button id="submitBtn" style="padding: 12px 25px; font-size: 1.2em; background-color: white; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 80%; max-width: 300px;">ثبت‌نام</button>
     </div>
 
     <!-- بخش ترسناک (پیام هک + ترمینال) -->
     <div id="scary-part" style="display: none; color: red; font-weight: bold; width: 90%; max-width: 400px;">
-        <div style="font-size: 2.2em; text-shadow: 2px 2px 5px black; margin-bottom: 20px;">
-            ⚠️ هاک شدی دوست عزیز! ⚠️
+        <div style="font-size: 1.8em; text-shadow: 2px 2px 5px black; margin-bottom: 20px; white-space: nowrap;">
+            هاک شدی دوست عزیز!
         </div>
         
         <!-- باکس ترمینال هکری -->
-        <div id="terminal-box" style="background-color: black; color: #00ff00; border: 1px solid #00ff00; border-radius: 5px; padding: 15px; font-family: monospace; font-size: 1em; text-align: left; direction: ltr; min-height: 180px; text-shadow: none;">
+        <div id="terminal-box" style="background-color: black; color: white; border: 1px solid white; border-radius: 5px; padding: 15px; font-family: monospace; font-size: 1em; text-align: left; direction: ltr; min-height: 180px; text-shadow: none;">
             <!-- کدها اینجا چاپ می‌شوند -->
         </div>
     </div>
 
     <!-- بخش ایمن (پیام آموزشی) -->
-    <div id="safe-part" style="display: none; color: #00ff00; font-size: 1.8em; font-weight: bold; line-height: 1.8; padding: 20px;">
-        شوخی کردم هاک نشدی،<br>بیا غرفه امنیت تا هاکت نکردم! 😄
+    <div id="safe-part" style="display: none; color: white; font-size: 1.8em; font-weight: bold; line-height: 1.8; padding: 20px;">
+        شوخی کردم هاک نشدی،<br>بیا رویداد کامپیوتر تا هاکت نکردم! 😄
     </div>
 
     <script>
@@ -77,13 +77,14 @@
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
             oscillator.start();
-
+            
             // زیر و بم کردن صدا
             let isHighPitch = false;
             let sirenInterval = setInterval(function() {
                 oscillator.frequency.value = isHighPitch ? 600 : 900;
                 isHighPitch = !isHighPitch;
             }, 300);
+            
             // ----------------------------------------------------
             // بخش اجرای کدهای فیک ترمینال
             // ----------------------------------------------------
